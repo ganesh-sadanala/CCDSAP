@@ -26,7 +26,7 @@ class GFG {
       int x = arr[i - 1];
       int min = i;
       for (int j = i + 1; j < n; j++) {
-        if (arr[j] < arr[min] && arr[j] > x)
+        if (arr[j] < =arr[min] && arr[j] > x)
           min = j;
       }
       arr[i - 1] ^= arr[min];
