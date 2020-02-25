@@ -5,49 +5,68 @@ import java.lang.*;
 import java.io.*;
 
 /* Name of the class has to be "Main" only if the class is public. */
-class Codechef
-{
-    static long tadelive(long []andy,long []bob,long [][]dp,int x,int y,int n,int i,int j) 
-    {
-        if(i==n)
-          return 0;
-        
-        if(dp[i][j]!=-1)
-          return dp[i][j];
-        
-        long res=-1;
-        if(j+1<=x)
-        {
-            res=(long)Math.max(res,andy[i]+tadelive(andy,bob,dp,x,y,n,i+1,j+1));
-        }
-        if((i-j)+1<=y)
-        {
-           res=(long)Math.max(res,bob[i]+tadelive(andy,bob,dp,x,y,n,i+1,j));   
-        }
-        return dp[i][j]=res;
-        
+class Codechef {
+
+  static class comparator implements Comparator<Delivery> {
+    public int compare(Delivery a, Delivery b) {
+      return b.ba - a.ba;
     }
-    
-	public static void main (String[] args) throws java.lang.Exception
-	{
-	   BufferedReader bf=new BufferedReader(new InputStreamReader(System.in));
-       String s[]=bf.readLine().trim().split("\\s+");
-       int n=Integer.parseInt(s[0]);
-       int x=Integer.parseInt(s[1]);
-       int y=Integer.parseInt(s[2]);
-       long andy[]=new long[n];
-       long bob[]=new long[n];
-       s=bf.readLine().trim().split("\\s+");
-       for(int i=0;i<n;i++)
-         andy[i]=Long.parseLong(s[i]);
-       s=bf.readLine().trim().split("\\s+");
-       for(int i=0;i<n;i++)
-         bob[i]=Long.parseLong(s[i]);  
-         
-         long dp[][]=new long[n+2][x+2];
-         for(int i=0;i<(n+2);i++)
-            Arrays.fill(dp[i],-1);
-            
-        System.out.println(tadelive(andy,bob,dp,x,y,n,0,0));
-	}
+  }
+
+  static class Delivery {
+    int a, b, ba;
+
+    Delivery(int p, int q, int pq) {
+      a = p;
+      b = q;
+      ba = pq;
+    }
+  }
+
+  static void tadelive(ArrayList<Delivery> list, int x, int y) {
+    int n = list.size();
+    long total = 0;
+    for (int i = 0; i < n; i++) {
+      Delivery ele = list.get(i);
+      if (ele.ba >= 0 && x > 0) {
+        total += ele.a;
+        x--;
+      } else if (y > 0 && ele.ba < 0) {
+        total += ele.b;
+        y--;
+      } else {
+        if (x >= y) {
+          total += ele.a;
+          x--;
+        } else {
+          total += ele.b;
+          y--;
+        }
+      }
+    }
+    System.out.println(total);
+  }
+
+  public static void main(String[] args) throws java.lang.Exception {
+    BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+    String s[] = bf.readLine().trim().split("\\s+");
+    int n = Integer.parseInt(s[0]);
+    int x = Integer.parseInt(s[1]);
+    int y = Integer.parseInt(s[2]);
+    int andy[] = new int[n];
+    int bob[] = new int[n];
+    s = bf.readLine().trim().split("\\s+");
+    for (int i = 0; i < n; i++)
+      andy[i] = Integer.parseInt(s[i]);
+    s = bf.readLine().trim().split("\\s+");
+    for (int i = 0; i < n; i++)
+      bob[i] = Integer.parseInt(s[i]);
+
+    ArrayList<Delivery> list = new ArrayList<>();
+    for (int i = 0; i < n; i++) {
+      list.add(new Delivery(andy[i], bob[i], andy[i] - bob[i]));
+    }
+    Collections.sort(list, new comparator());
+    tadelive(list, x, y);
+  }
 }
