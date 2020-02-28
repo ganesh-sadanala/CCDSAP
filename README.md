@@ -1,2 +1,3 @@
 # CCDSAP
-Practice Problems to crack codechef CCDSAP 
+
+Solutions to Resources problems to Crack CCDSAP
