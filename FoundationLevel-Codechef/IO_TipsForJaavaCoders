@@ -1,0 +1,21 @@
+https://www.geeksforgeeks.org/fast-io-in-java-in-competitive-programming/
+
+
+In addition to the above mentioned link, try to decrease number of reads and
+writes to the console.
+
+//Example code -> print whether given number is even or odd
+/*
+10
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+*/
+Use StringBuffer to store the output for all test cases and output at once.
